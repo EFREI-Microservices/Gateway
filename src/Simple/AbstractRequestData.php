@@ -2,11 +2,14 @@
 
 namespace App\Simple;
 
-abstract class AbstractRequestData
+use App\Interface\RequestDataInterface;
+
+abstract class AbstractRequestData implements RequestDataInterface
 {
-    private ?string $authorizationToken;
+    private ?string $authorizationToken = null;
     private string $method;
-    private string $routeName;
+    private string $endpoint;
+    private ?string $urlParameter = null;
 
     final public function setAuthorizationToken(?string $authorizationToken): static
     {
@@ -32,15 +35,27 @@ abstract class AbstractRequestData
         return $this->method;
     }
 
-    final public function setRouteName(string $routeName): static
+    final public function setEndpoint(string $endpoint): static
     {
-        $this->routeName = $routeName;
+        $this->endpoint = $endpoint;
 
         return $this;
     }
 
-    final public function getRouteName(): string
+    final public function getEndpoint(): string
     {
-        return $this->routeName;
+        return $this->endpoint;
+    }
+
+    final public function setUrlParameter(?string $urlParameter): static
+    {
+        $this->urlParameter = $urlParameter;
+
+        return $this;
+    }
+
+    final public function getUrlParameter(): ?string
+    {
+        return $this->urlParameter;
     }
 }
