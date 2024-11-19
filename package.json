@@ -1,6 +1,23 @@
 {
+    "name": "gateway",
+    "version": "1.0.0",
+    "description": "gateway pour le projet final du cours microservices",
+    "repository": "https://github.com/EFREI-Microservices/Gateway/",
+    "author": "Orden14",
+    "license": "GPL-3.0",
     "scripts": {
-        "start": "symfony server:start --port=8001",
-        "truncate-database": "symfony console d:d:d --if-exists --force && symfony console d:d:c && symfony console d:s:u --force && symfony console d:f:l -n"
+        "server-start": "symfony server:start --port=8001",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "*.php": [
+            "vendor/bin/php-cs-fixer fix --config .php-cs-fixer.dist.php"
+        ]
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "husky": "^9.1.6",
+        "lint-staged": "^15.2.10"
     }
 }
