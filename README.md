@@ -39,31 +39,24 @@ Les microservices doivent être lancés pour que le gateway fonctionne.
 
 ## Comment l'utiliser
 
-Chaque requête peut comporter le token JWT dans le header si la route a besoin d'authentification
-ATTENTION : a minima, chaque requête doit prendre ce paramètre dans le body : 
-```json 
-{
-    "endpoint" : "Saisir l'endpoint de la requête (par exemple 'auth' ou 'user' sont possibles pour le UserService",
-}
-```
+Chaque requête peut comporter le token JWT dans le header si la route a besoin d'authentification.   
 
-Pour connaitre les différents endpoints disponibles, lire la documentationd des différents services.
+Pour connaitre les différents endpoints disponibles, lire la documentation des différents services.
 
-#### Pour utiliser le UserService : 
-Une requête doit être envoyée à `http://localhost:8001/gateway/userservice`.  
-Si souhaité, on peut passer l'id d'un utilisateur en paramètre : `http://localhost:8001/gateway/userservice/idutilisateur`  
+### 1. Pour utiliser le `UserService` : 
+Une requête doit être envoyée à `http://localhost:8001/gateway/userservice/{endpoint}`.  
+Si souhaité, on peut passer l'id d'un utilisateur en paramètre : `http://localhost:8001/gateway/userservice/{endpoint}/{id}`.  
 Dans le body, les paramètres suivants sont acceptés : 
 ```json 
 {
-    "id": int,
     "username": string,
     "password": string,
     "role": string
 }
 ```
 
-Pour le paramètre `endpoint`, les valeurs possibles sont :
-- `register` : pour accéder à la route d'inscription
-- `login` : pour accéder à la route de connexion
-- `check-token` : pour vérifier la validité du token
-- `user` : pour les autres routes liées aux comptes utilisateurs
+Pour le paramètre URL `endpoint`, les valeurs possibles sont :
+- [POST] `register` : pour accéder à la route d'inscription
+- [POST] `login` : pour accéder à la route de connexion
+- [GET] `check-token` : pour vérifier la validité du token
+- [GET | PATCH | DELETE] `user` : pour les autres routes liées aux comptes utilisateurs

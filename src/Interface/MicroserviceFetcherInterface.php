@@ -8,7 +8,5 @@ interface MicroserviceFetcherInterface
 {
     public function routeRequest(RequestDataInterface $requestData): ResponseData;
 
-    public function getHeader(RequestDataInterface $requestData): array;
-
-    public function getBody(RequestDataInterface $requestData): array;
+    public function getRoute(RequestDataInterface $requestData): string;
 }

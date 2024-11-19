@@ -9,6 +9,7 @@ abstract class AbstractRequestData implements RequestDataInterface
     private ?string $authorizationToken = null;
     private string $method;
     private string $endpoint;
+    private ?string $id = null;
 
     final public function setAuthorizationToken(?string $authorizationToken): static
     {
@@ -44,5 +45,17 @@ abstract class AbstractRequestData implements RequestDataInterface
     final public function getEndpoint(): string
     {
         return $this->endpoint;
+    }
+
+    final public function setId(?string $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    final public function getId(): ?string
+    {
+        return $this->id;
     }
 }
