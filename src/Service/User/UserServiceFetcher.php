@@ -4,10 +4,9 @@ namespace App\Service\User;
 
 use App\Helper\User\UserServiceRouteSwitcher;
 use App\Interface\RequestDataInterface;
-use App\Interface\ResponseDataInterface;
 use App\Service\AbstractServiceFetcher;
+use App\Simple\ResponseData;
 use App\Simple\User\UserRequestData;
-use App\Simple\User\UserResponseData;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -21,33 +20,29 @@ final readonly class UserServiceFetcher extends AbstractServiceFetcher
     /**
      * @param UserRequestData $requestData
      *
-     * @return UserResponseData
-     *
      * @throws Exception
      */
-    public function routeRequest(RequestDataInterface $requestData): ResponseDataInterface
+    public function routeRequest(RequestDataInterface $requestData): ResponseData
     {
-        $responseData = new UserResponseData();
 
         try {
             $response = $this->httpClient->request(
                 $requestData->getMethod(),
-                UserServiceRouteSwitcher::switchRoute($requestData->getEndpoint(), $requestData->getUrlParameter()),
+                UserServiceRouteSwitcher::switchRoute($requestData->getEndpoint(), $requestData->getId()),
                 [
                     'headers' => $this->getHeader($requestData),
                     'json' => $this->getBody($requestData),
                 ]
             );
 
-            $responseData->setResponseCode($response->getStatusCode())
-                ->setResponseBody($response->toArray())
-            ;
-
             if ($response->getStatusCode() !== Response::HTTP_OK) {
                 throw new Exception($response->getContent());
             }
 
-            return $responseData;
+            return (new ResponseData())
+                ->setResponseCode($response->getStatusCode())
+                ->setResponseBody($response->toArray())
+            ;
 
         } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|DecodingExceptionInterface $exception) {
             throw new Exception($exception->getMessage());

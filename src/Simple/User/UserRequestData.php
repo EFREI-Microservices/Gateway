@@ -6,19 +6,19 @@ use App\Simple\AbstractRequestData;
 
 final class UserRequestData extends AbstractRequestData
 {
-    private ?int $id = null;
+    private ?string $id = null;
     private ?string $username = null;
     private ?string $password = null;
     private ?string $role = null;
 
-    public function setId(?int $id): self
+    public function setId(?string $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

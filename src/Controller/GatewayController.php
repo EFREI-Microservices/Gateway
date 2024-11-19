@@ -20,17 +20,16 @@ final class GatewayController extends AbstractController
     }
 
     #[Route('userservice/{userId?}', name: 'user_service', methods: ['GET', 'POST', 'PATCH', 'DELETE'])]
-    public function userService(Request $request, ?int $userId = null): Response
+    public function userService(Request $request, ?string $userId = null): Response
     {
         try {
             $rawData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
             $requestData = (new UserRequestData())
+                ->setId($userId)
                 ->setMethod($request->getMethod())
                 ->setEndpoint($rawData['endpoint'])
-                ->setUrlParameter($rawData['urlParameter'] ?? null)
                 ->setAuthorizationToken($request->headers->get('Authorization'))
-                ->setId($userId)
                 ->setUsername($rawData['username'] ?? null)
                 ->setPassword($rawData['password'] ?? null)
                 ->setRole($rawData['role'] ?? null)

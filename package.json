@@ -6,7 +6,7 @@
     "author": "Orden14",
     "license": "GPL-3.0",
     "scripts": {
-        "server-start": "symfony server:start --port=8001",
+        "start": "symfony server:start --port=8001",
         "prepare": "husky"
     },
     "lint-staged": {

@@ -6,7 +6,7 @@ use App\Enum\UserServiceAuthenticationEndpointsEnum;
 
 final readonly class UserServiceRouteSwitcher
 {
-    public static function switchRoute(string $endpoint, ?string $urlParameter = null): string
+    public static function switchRoute(string $endpoint, ?string $userId): string
     {
         $apiUrl = $_ENV['API_USER_SERVICE_URL'];
 
@@ -14,6 +14,6 @@ final readonly class UserServiceRouteSwitcher
             return "{$apiUrl}/auth/{$endpoint}";
         }
 
-        return "{$apiUrl}/{$endpoint}/{$urlParameter}";
+        return "{$apiUrl}/{$endpoint}/{$userId}";
     }
 }
