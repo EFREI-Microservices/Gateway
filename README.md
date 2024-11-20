@@ -39,25 +39,37 @@ Les microservices doivent être lancés pour que le gateway fonctionne.
 
 ## Comment l'utiliser
 
-Chaque requête peut comporter le token JWT dans le header si la route a besoin d'authentification
-A minima, chaque requête peut prendre ces deux paramètres dans le body : 
+Chaque requête peut comporter le token JWT dans le header si la route a besoin d'authentification.   
+
+Pour connaitre les différents endpoints disponibles, lire la documentation des différents services.
+
+### 1. Pour utiliser le `UserService` : 
+Une requête doit être envoyée à `http://localhost:8001/gateway/userservice/{endpoint}`.  
+Si souhaité, on peut passer l'id d'un utilisateur en paramètre : `http://localhost:8001/gateway/userservice/{endpoint}/{id}`.  
+Dans le body, les paramètres suivants sont acceptés : 
 ```json 
 {
-    "endpoint" : "Saisir l'endpoint de la requête (par exemple 'auth' ou 'user' sont possibles pour le UserService",
-    "urlParameter": "S'il y a un paramètre d'url à passer, par exemple {id} sur la route pour update un utilisateur"
-}
-```
-
-Pour connaitre les différents endpoints disponibles, lire la documentationd des différents services.
-
-#### Pour utiliser le UserService : 
-Une requête doit être envoyée à http://localhost:8001/gateway/userservice.  
-Dans le body, les paramètres suivants sont possibles : 
-```json 
-{
-    "id": int,
     "username": string,
     "password": string,
     "role": string
+}
+```
+
+Pour le paramètre URL `endpoint`, les valeurs possibles sont :
+- [POST] `register` : pour accéder à la route d'inscription
+- [POST] `login` : pour accéder à la route de connexion
+- [GET] `check-token` : pour vérifier la validité du token
+- [GET | PATCH | DELETE] `user` : pour les autres routes liées aux comptes utilisateurs
+
+### 2. Pour utiliser le `ProductService` :
+Une requête doit être envoyée à `http://localhost:8001/gateway/productservice/`.  
+Si souhaité, on peut passer l'id d'un produit en paramètre : `http://localhost:8001/gateway/productservice/{id}`.  
+Dans le body, les paramètres suivants sont acceptés : 
+```json 
+{
+    "name": string,
+    "description": string,
+    "price": int,
+    "available": bool
 }
 ```

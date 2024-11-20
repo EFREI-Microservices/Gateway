@@ -2,33 +2,31 @@
 
 namespace App\Simple;
 
-use App\Interface\ResponseDataInterface;
-
-abstract class AbstractResponseData implements ResponseDataInterface
+final class ResponseData
 {
     private int $responseCode = 0;
     private array $responseBody = [];
 
-    final public function setResponseCode(int $responseCode): static
+    public function setResponseCode(int $responseCode): self
     {
         $this->responseCode = $responseCode;
 
         return $this;
     }
 
-    final public function getResponseCode(): int
+    public function getResponseCode(): int
     {
         return $this->responseCode;
     }
 
-    final public function setResponseBody(array $responseBody): static
+    public function setResponseBody(array $responseBody): self
     {
         $this->responseBody = $responseBody;
 
         return $this;
     }
 
-    final public function getResponseBody(): array
+    public function getResponseBody(): array
     {
         return $this->responseBody;
     }

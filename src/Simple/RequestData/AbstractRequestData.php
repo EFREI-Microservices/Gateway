@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Simple;
+namespace App\Simple\RequestData;
 
 use App\Interface\RequestDataInterface;
 
@@ -8,8 +8,8 @@ abstract class AbstractRequestData implements RequestDataInterface
 {
     private ?string $authorizationToken = null;
     private string $method;
-    private string $endpoint;
-    private ?string $urlParameter = null;
+    private ?string $endpoint = null;
+    private ?string $id = null;
 
     final public function setAuthorizationToken(?string $authorizationToken): static
     {
@@ -35,27 +35,27 @@ abstract class AbstractRequestData implements RequestDataInterface
         return $this->method;
     }
 
-    final public function setEndpoint(string $endpoint): static
+    final public function setEndpoint(?string $endpoint): static
     {
         $this->endpoint = $endpoint;
 
         return $this;
     }
 
-    final public function getEndpoint(): string
+    final public function getEndpoint(): ?string
     {
         return $this->endpoint;
     }
 
-    final public function setUrlParameter(?string $urlParameter): static
+    final public function setId(?string $id): self
     {
-        $this->urlParameter = $urlParameter;
+        $this->id = $id;
 
         return $this;
     }
 
-    final public function getUrlParameter(): ?string
+    final public function getId(): ?string
     {
-        return $this->urlParameter;
+        return $this->id;
     }
 }

@@ -1,22 +1,16 @@
 <?php
 
-namespace App\Service;
+namespace App\Helper;
 
-use App\Interface\MicroserviceFetcherInterface;
 use App\Interface\RequestDataInterface;
-use Override;
 use ReflectionClass;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-abstract readonly class AbstractServiceFetcher implements MicroserviceFetcherInterface
+final readonly class RequestContentManager
 {
-    public function __construct(
-        protected HttpClientInterface $httpClient
-    ) {
-    }
-
-    #[Override]
-    final public function getHeader(RequestDataInterface $requestData): array
+    /**
+     * @return array<string, string>
+     */
+    public static function getHeaders(RequestDataInterface $requestData): array
     {
         if (!$requestData->getAuthorizationToken()) {
             return [];
@@ -27,8 +21,10 @@ abstract readonly class AbstractServiceFetcher implements MicroserviceFetcherInt
         ];
     }
 
-    #[Override]
-    final public function getBody(RequestDataInterface $requestData): array
+    /**
+     * @return array<string, int|string|bool>
+     */
+    public static function getBody(RequestDataInterface $requestData): array
     {
         $reflectionClass = new ReflectionClass($requestData);
         $properties = $reflectionClass->getProperties();

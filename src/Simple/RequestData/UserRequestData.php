@@ -1,27 +1,12 @@
 <?php
 
-namespace App\Simple\User;
-
-use App\Simple\AbstractRequestData;
+namespace App\Simple\RequestData;
 
 final class UserRequestData extends AbstractRequestData
 {
-    private ?int $id = null;
     private ?string $username = null;
     private ?string $password = null;
     private ?string $role = null;
-
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function setUsername(?string $username): self
     {
