@@ -7,7 +7,6 @@ use App\Helper\RequestContentManager;
 use App\Interface\MicroserviceFetcherInterface;
 use App\Interface\RequestDataInterface;
 use App\Simple\ResponseData;
-use Exception;
 use Override;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -23,9 +22,6 @@ abstract readonly class AbstractServiceFetcher implements MicroserviceFetcherInt
     ) {
     }
 
-    /**
-     * @throws Exception
-     */
     #[Override]
     final public function routeRequest(RequestDataInterface $requestData): ResponseData
     {

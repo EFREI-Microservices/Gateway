@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\ServiceFetcher\ProductServiceFetcher;
-use App\Service\ServiceFetcher\UserServiceFetcher;
+use App\Facade\ServiceFetcherFacade;
 use App\Simple\RequestData\ProductRequestData;
 use App\Simple\RequestData\UserRequestData;
 use Exception;
@@ -17,8 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class GatewayController extends AbstractController
 {
     public function __construct(
-        private readonly UserServiceFetcher $userServiceFetcher,
-        private readonly ProductServiceFetcher $productServiceFetcher,
+        private readonly ServiceFetcherFacade $serviceFetcherFacade,
     ) {
     }
 
@@ -38,7 +36,7 @@ final class GatewayController extends AbstractController
                 ->setRole($rawData['role'] ?? null)
             ;
 
-            $responseData = $this->userServiceFetcher->routeRequest($requestData);
+            $responseData = $this->serviceFetcherFacade->getUserServiceFetcher()->routeRequest($requestData);
 
         } catch (Exception $exception) {
             return new JsonResponse([
@@ -68,7 +66,7 @@ final class GatewayController extends AbstractController
                 ->setAvailable($rawData['available'] ?? null)
             ;
 
-            $responseData = $this->productServiceFetcher->routeRequest($requestData);
+            $responseData = $this->serviceFetcherFacade->getProductServiceFetcher()->routeRequest($requestData);
 
         } catch (Exception $exception) {
             return new JsonResponse([
