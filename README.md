@@ -60,3 +60,16 @@ Pour le paramètre URL `endpoint`, les valeurs possibles sont :
 - [POST] `login` : pour accéder à la route de connexion
 - [GET] `check-token` : pour vérifier la validité du token
 - [GET | PATCH | DELETE] `user` : pour les autres routes liées aux comptes utilisateurs
+
+### 2. Pour utiliser le `ProductService` :
+Une requête doit être envoyée à `http://localhost:8001/gateway/productservice/`.  
+Si souhaité, on peut passer l'id d'un produit en paramètre : `http://localhost:8001/gateway/productservice/{id}`.  
+Dans le body, les paramètres suivants sont acceptés : 
+```json 
+{
+    "name": string,
+    "description": string,
+    "price": int,
+    "available": bool
+}
+```

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\ServiceFetcher;
 
 use App\Helper\ErrorMessageTrimmer;
 use App\Helper\RequestContentManager;

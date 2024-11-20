@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Simple\User;
-
-use App\Simple\AbstractRequestData;
+namespace App\Simple\RequestData;
 
 final class UserRequestData extends AbstractRequestData
 {

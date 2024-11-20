@@ -22,7 +22,7 @@ final readonly class RequestContentManager
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, int|string|bool>
      */
     public static function getBody(RequestDataInterface $requestData): array
     {

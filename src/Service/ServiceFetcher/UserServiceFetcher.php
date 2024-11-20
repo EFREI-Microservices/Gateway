@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Service\User;
+namespace App\Service\ServiceFetcher;
 
 use App\Enum\UserServiceAuthenticationEndpointsEnum;
 use App\Interface\RequestDataInterface;
-use App\Service\AbstractServiceFetcher;
-use App\Simple\User\UserRequestData;
+use App\Simple\RequestData\UserRequestData;
 use Override;
 
 final readonly class UserServiceFetcher extends AbstractServiceFetcher
