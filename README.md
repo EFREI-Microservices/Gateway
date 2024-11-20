@@ -19,25 +19,15 @@ git clone https://github.com/EFREI-Microservices/ProductService.git
 composer install
 ```
 
-3. Lancer la base de données
-```bash
-docker-compose up -d
-```
-
-4. Générer les données de test
-```bash
-npm run truncate-database
-```
-
-5. Lancer le serveur
+3. Lancer le serveur
 ```bash
 npm run start
 ```
 
-Le gateway est disponible à l'adresse `http://localhost:8001`
-Les microservices doivent être lancés pour que le gateway fonctionne.
+Le gateway est disponible à l'adresse `http://localhost:8001`.  
+⚠️ Les microservices doivent être lancés pour que le gateway fonctionne entièrement.
 
-## Comment l'utiliser
+## Utiliser l'API Gateway
 
 Chaque requête peut comporter le token JWT dans le header si la route a besoin d'authentification.   
 
@@ -62,6 +52,19 @@ Pour le paramètre URL `endpoint`, les valeurs possibles sont :
 - [GET] `check-token` : pour vérifier la validité du token
 - [GET | PATCH | DELETE] `user` : pour les autres routes liées aux comptes utilisateurs
 
+#### ℹ️ Exemple d'utilisation
+Exemple pour PATCH un utilisateur sans modifier le mot de passe :  
+Route : `http://localhost:8001/gateway/userservice/user/idutilisateur123456`  
+Méthode : `PATCH`  
+Headers (Authorization) : `Bearer exampletoken123456`  
+Body :  
+```json
+{
+    "username": "newUsername",
+    "role": "admin"
+}
+```
+
 ### 2. Pour utiliser le `ProductService` :
 [Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/ProductService?tab=readme-ov-file#endpoints)  
 Une requête doit être envoyée à `http://localhost:8001/gateway/productservice/`.  
@@ -76,13 +79,33 @@ Dans le body, les paramètres suivants sont acceptés :
 }
 ```
 
+#### ℹ️ Exemple d'utilisation
+Exemple pour voir tous les produits :  
+Route : `http://localhost:8001/gateway/productservice`  
+Méthode : `GET`  
+Headers (Authorization) : Aucun  
+Body : Aucun
+
 ### 3. Pour utiliser le `BasketService` :
-[Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/UserService?tab=readme-ov-file#endpoints)  
-Une requête doit être envoyée à `http://localhost:8001/gateway/basketservice/`.
+[Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/BasketService?tab=readme-ov-file#endpoints)  
+Une requête doit être envoyée à `http://localhost:8001/gateway/basketservice/{endpoint}`.
 Dans le body, les paramètres suivants sont acceptés : 
 ```json 
 {
     "productId": int,
     "quantity": int
 }
-``` 
+```
+
+#### ℹ️ Exemple d'utilisation
+Exemple pour ajouter 5 produits avec l'id `47` au panier de l'utilisateur authentifié :  
+Route : `http://localhost:8001/gateway/basketservice/add`  
+Méthode : `POST`  
+Headers (Authorization) : `Bearer exampletoken123456`  
+Body :  
+```json
+{
+    "productId": 47,
+    "quantity": 5
+}
+```

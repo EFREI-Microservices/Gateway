@@ -3,13 +3,13 @@
 namespace App\Service\ServiceFetcher;
 
 use App\Interface\RequestDataInterface;
-use App\Simple\RequestData\ProductRequestData;
+use App\Simple\RequestData\BasketRequestData;
 use Override;
 
 final readonly class BasketServiceFetcher extends AbstractServiceFetcher
 {
     /**
-     * @param ProductRequestData $requestData
+     * @param BasketRequestData $requestData
      */
     #[Override]
     public function getRoute(RequestDataInterface $requestData): string

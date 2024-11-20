@@ -2,6 +2,7 @@
 
 namespace App\Facade;
 
+use App\Interface\MicroserviceFetcherInterface;
 use App\Service\ServiceFetcher\BasketServiceFetcher;
 use App\Service\ServiceFetcher\ProductServiceFetcher;
 use App\Service\ServiceFetcher\UserServiceFetcher;
@@ -14,17 +15,17 @@ final readonly class ServiceFetcherFacade
     ) {
     }
 
-    public function getUserServiceFetcher(): UserServiceFetcher
+    public function getUserServiceFetcher(): MicroserviceFetcherInterface
     {
         return new UserServiceFetcher($this->httpClient);
     }
 
-    public function getProductServiceFetcher(): ProductServiceFetcher
+    public function getProductServiceFetcher(): MicroserviceFetcherInterface
     {
         return new ProductServiceFetcher($this->httpClient);
     }
 
-    public function getBasketServiceFetcher(): BasketServiceFetcher
+    public function getBasketServiceFetcher(): MicroserviceFetcherInterface
     {
         return new BasketServiceFetcher($this->httpClient);
     }
