@@ -10,7 +10,7 @@ Ceci est une courte documentation du gateway pour le projet final de Microservic
 
 ## Installation
 
-1. Clone le repository
+1. Cloner le repository
 ```bash
 git clone https://github.com/EFREI-Microservices/ProductService.git
 ```
@@ -44,6 +44,7 @@ Chaque requête peut comporter le token JWT dans le header si la route a besoin 
 Pour connaitre les différents endpoints disponibles, lire la documentation des différents services.
 
 ### 1. Pour utiliser le `UserService` : 
+[Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/UserService?tab=readme-ov-file#endpoints)  
 Une requête doit être envoyée à `http://localhost:8001/gateway/userservice/{endpoint}`.  
 Si souhaité, on peut passer l'id d'un utilisateur en paramètre : `http://localhost:8001/gateway/userservice/{endpoint}/{id}`.  
 Dans le body, les paramètres suivants sont acceptés : 
@@ -62,6 +63,7 @@ Pour le paramètre URL `endpoint`, les valeurs possibles sont :
 - [GET | PATCH | DELETE] `user` : pour les autres routes liées aux comptes utilisateurs
 
 ### 2. Pour utiliser le `ProductService` :
+[Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/ProductService?tab=readme-ov-file#endpoints)  
 Une requête doit être envoyée à `http://localhost:8001/gateway/productservice/`.  
 Si souhaité, on peut passer l'id d'un produit en paramètre : `http://localhost:8001/gateway/productservice/{id}`.  
 Dans le body, les paramètres suivants sont acceptés : 
@@ -73,3 +75,14 @@ Dans le body, les paramètres suivants sont acceptés :
     "available": bool
 }
 ```
+
+### 3. Pour utiliser le `BasketService` :
+[Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/UserService?tab=readme-ov-file#endpoints)  
+Une requête doit être envoyée à `http://localhost:8001/gateway/basketservice/`.
+Dans le body, les paramètres suivants sont acceptés : 
+```json 
+{
+    "productId": int,
+    "quantity": int
+}
+``` 
