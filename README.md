@@ -10,7 +10,7 @@ Ceci est une courte documentation du gateway pour le projet final de Microservic
 
 ## Installation
 
-1. Clone le repository
+1. Cloner le repository
 ```bash
 git clone https://github.com/EFREI-Microservices/ProductService.git
 ```
