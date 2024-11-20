@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Facade\ServiceFetcherFacade;
+use App\Simple\RequestData\BasketRequestData;
 use App\Simple\RequestData\ProductRequestData;
 use App\Simple\RequestData\UserRequestData;
 use Exception;
@@ -67,6 +68,34 @@ final class GatewayController extends AbstractController
             ;
 
             $responseData = $this->serviceFetcherFacade->getProductServiceFetcher()->routeRequest($requestData);
+
+        } catch (Exception $exception) {
+            return new JsonResponse([
+                'error' => $exception->getMessage(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(
+            $responseData->getResponseBody(),
+            $responseData->getResponseCode()
+        );
+    }
+
+    #[Route('basketservice/{endpoint}', name: 'basket_service', methods: ['GET', 'POST', 'DELETE'])]
+    public function basketService(Request $request, string $endpoint): JsonResponse
+    {
+        try {
+            $rawData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+            $requestData = (new BasketRequestData())
+                ->setMethod($request->getMethod())
+                ->setEndpoint($endpoint)
+                ->setAuthorizationToken($request->headers->get('Authorization'))
+                ->setProductId($rawData['productId'] ?? null)
+                ->setQuantity($rawData['quantity'] ?? null)
+            ;
+
+            $responseData = $this->serviceFetcherFacade->getBasketServiceFetcher()->routeRequest($requestData);
 
         } catch (Exception $exception) {
             return new JsonResponse([
