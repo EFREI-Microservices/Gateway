@@ -112,7 +112,7 @@ Body :
 
 ## Ajouter un microservice au gateway en 5 minutes chrono
 
-Pour ajouter une service au gateway, suivre les étapes suivantes :
+Pour ajouter un service au gateway, suivre les étapes suivantes :
 
 #### 1. Créer un `RequestData` :  
 Ajouter votre `XxxRequestData` dans `src/Simple/RequestData/` et extends `AbstractRequestData`.  
