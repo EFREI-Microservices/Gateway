@@ -109,3 +109,20 @@ Body :
     "quantity": 5
 }
 ```
+
+## Ajouter un microservice au gateway en 5 minutes chrono
+
+Pour ajouter une service au gateway, suivre les étapes suivantes :
+
+#### 1. Créer un `RequestData` :  
+Ajouter votre `XxxRequestData` dans `src/Simple/RequestData/` et extends `AbstractRequestData`.  
+Dans celui-ci, ajoutez les propriétées liées à votre microservice.  
+
+#### 2. Créer un `ServiceFetcher`
+Ajouter votre `XxxServiceFetcher` dans `src/ServiceFetcher/` et extends `AbstractServiceFetcher`.  
+Dans celui-ci, vous devez implémenter la méthode `getRoute()` qui gère la logique de routing en fonction de votre microservice.  
+Enfin, ajouter votre nouveau `ServiceFetcher` dans le `ServiceFetcherFacade` pour pouvoir le récupérer depuis votre controller `$this->serviceFetcherFacade->getXxxServiceFetcher`.  
+
+#### 3. Créer un controlleur
+Ajouter un controlleur qui extends `AbstractGatewayController` et implémenter la fonction `index()`.  
+La route index de ce nouveau controlleur doit retourner `return $this->manageRequest($requestData $serviceFetcher)`.  

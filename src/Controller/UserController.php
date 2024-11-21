@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Facade\ServiceFetcherFacade;
 use App\Simple\RequestData\UserRequestData;
 use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,11 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends AbstractGatewayController
 {
-    public function __construct(
-        private readonly ServiceFetcherFacade $serviceFetcherFacade,
-    ) {
-    }
-
     /**
      * @throws JsonException
      */
