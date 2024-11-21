@@ -25,7 +25,7 @@ npm run start
 ```
 
 Le gateway est disponible à l'adresse `http://localhost:8001`.  
-⚠️ Les microservices doivent être lancés pour que le gateway fonctionne entièrement.
+⚠️ Les microservices doivent être démarrés pour que le gateway fonctionne entièrement.
 
 ## Utiliser l'API Gateway
 
@@ -35,8 +35,8 @@ Pour connaitre les différents endpoints disponibles, lire la documentation des 
 
 ### 1. Pour utiliser le `UserService` : 
 [Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/UserService?tab=readme-ov-file#endpoints)  
-Une requête doit être envoyée à `http://localhost:8001/gateway/userservice/{endpoint}`.  
-Si souhaité, on peut passer l'id d'un utilisateur en paramètre : `http://localhost:8001/gateway/userservice/{endpoint}/{id}`.  
+Une requête doit être envoyée à `http://localhost:8001/userservice/{endpoint}`.  
+Si souhaité, on peut passer l'id d'un utilisateur en paramètre : `http://localhost:8001/userservice/{endpoint}/{id}`.  
 Dans le body, les paramètres suivants sont acceptés : 
 ```json 
 {
@@ -54,7 +54,7 @@ Pour le paramètre URL `endpoint`, les valeurs possibles sont :
 
 #### ℹ️ Exemple d'utilisation
 Exemple pour PATCH un utilisateur sans modifier le mot de passe :  
-Route : `http://localhost:8001/gateway/userservice/user/idutilisateur123456`  
+Route : `http://localhost:8001/userservice/user/idutilisateur123456`  
 Méthode : `PATCH`  
 Headers (Authorization) : `Bearer exampletoken123456`  
 Body :  
@@ -67,8 +67,8 @@ Body :
 
 ### 2. Pour utiliser le `ProductService` :
 [Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/ProductService?tab=readme-ov-file#endpoints)  
-Une requête doit être envoyée à `http://localhost:8001/gateway/productservice/`.  
-Si souhaité, on peut passer l'id d'un produit en paramètre : `http://localhost:8001/gateway/productservice/{id}`.  
+Une requête doit être envoyée à `http://localhost:8001/productservice/`.  
+Si souhaité, on peut passer l'id d'un produit en paramètre : `http://localhost:8001/productservice/{id}`.  
 Dans le body, les paramètres suivants sont acceptés : 
 ```json 
 {
@@ -81,14 +81,14 @@ Dans le body, les paramètres suivants sont acceptés :
 
 #### ℹ️ Exemple d'utilisation
 Exemple pour voir tous les produits :  
-Route : `http://localhost:8001/gateway/productservice`  
+Route : `http://localhost:8001/productservice`  
 Méthode : `GET`  
 Headers (Authorization) : Aucun  
 Body : Aucun
 
 ### 3. Pour utiliser le `BasketService` :
 [Lien vers les endpoints détaillés](https://github.com/EFREI-Microservices/BasketService?tab=readme-ov-file#endpoints)  
-Une requête doit être envoyée à `http://localhost:8001/gateway/basketservice/{endpoint}`.
+Une requête doit être envoyée à `http://localhost:8001/basketservice/{endpoint}`.
 Dans le body, les paramètres suivants sont acceptés : 
 ```json 
 {
@@ -99,7 +99,7 @@ Dans le body, les paramètres suivants sont acceptés :
 
 #### ℹ️ Exemple d'utilisation
 Exemple pour ajouter 5 produits avec l'id `47` au panier de l'utilisateur authentifié :  
-Route : `http://localhost:8001/gateway/basketservice/add`  
+Route : `http://localhost:8001/basketservice/add`  
 Méthode : `POST`  
 Headers (Authorization) : `Bearer exampletoken123456`  
 Body :  
@@ -109,3 +109,20 @@ Body :
     "quantity": 5
 }
 ```
+
+## Ajouter un microservice au gateway en 5 minutes chrono
+
+Pour ajouter une service au gateway, suivre les étapes suivantes :
+
+#### 1. Créer un `RequestData` :  
+Ajouter votre `XxxRequestData` dans `src/Simple/RequestData/` et extends `AbstractRequestData`.  
+Dans celui-ci, ajoutez les propriétées liées à votre microservice.  
+
+#### 2. Créer un `ServiceFetcher`
+Ajouter votre `XxxServiceFetcher` dans `src/ServiceFetcher/` et extends `AbstractServiceFetcher`.  
+Dans celui-ci, vous devez implémenter la méthode `getRoute()` qui gère la logique de routing en fonction de votre microservice.  
+Enfin, ajouter votre nouveau `ServiceFetcher` dans le `ServiceFetcherFacade` pour pouvoir le récupérer depuis votre controller `$this->serviceFetcherFacade->getXxxServiceFetcher`.  
+
+#### 3. Créer un controlleur
+Ajouter un controlleur qui extends `AbstractGatewayController` et implémenter la fonction `index()`.  
+La route index de ce nouveau controlleur doit retourner `return $this->manageRequest($requestData $serviceFetcher)`.  
